@@ -9,6 +9,7 @@ import SwiftUI
 
 struct ShoppingListRowView: View {
     let shoppingList: ShoppingList
+    @Environment(LanguageService.self) private var languageService
 
     private var progress: Double {
         guard shoppingList.itemCount > 0 else { return 0 }
@@ -69,12 +70,12 @@ struct ShoppingListRowView: View {
 
                     HStack {
                         if shoppingList.checkedItemCount > 0 {
-                            Text("\(shoppingList.checkedItemCount)/\(shoppingList.itemCount) checked")
+                            Text(String(format: languageService.string(forKey: "checked_progress_format"), shoppingList.checkedItemCount, shoppingList.itemCount))
                                 .font(.caption2)
                                 .fontWeight(.medium)
                                 .foregroundStyle(.teal)
                         } else {
-                            Text("0/\(shoppingList.itemCount) checked")
+                            Text(String(format: languageService.string(forKey: "checked_progress_format"), 0, shoppingList.itemCount))
                                 .font(.caption2)
                                 .foregroundStyle(.tertiary)
                         }

@@ -10,11 +10,13 @@ import SwiftData
 
 struct ShoppingListsView: View {
     @Environment(\.modelContext) private var modelContext
+    @Environment(LanguageService.self) private var languageService
     @Query(sort: \ShoppingList.modifiedDate, order: .reverse)
     private var shoppingLists: [ShoppingList]
 
     @State private var showingCreateSheet = false
     @State private var listToEdit: ShoppingList?
+    @State private var showingSettings = false
 
     var body: some View {
         NavigationStack {
@@ -27,6 +29,14 @@ struct ShoppingListsView: View {
             }
             .navigationTitle("shopping_lists_title")
             .toolbar {
+                ToolbarItem(placement: .navigationBarLeading) {
+                    Button {
+                        showingSettings = true
+                    } label: {
+                        Label("settings", systemImage: "gearshape")
+                    }
+                    .tint(.teal)
+                }
                 ToolbarItem(placement: .primaryAction) {
                     Button {
                         showingCreateSheet = true
@@ -35,6 +45,10 @@ struct ShoppingListsView: View {
                     }
                     .tint(.teal)
                 }
+            }
+            .sheet(isPresented: $showingSettings) {
+                SettingsView()
+                    .environment(languageService)
             }
             .sheet(isPresented: $showingCreateSheet) {
                 CreateListView()

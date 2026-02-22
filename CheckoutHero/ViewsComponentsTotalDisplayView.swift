@@ -9,6 +9,7 @@ import SwiftUI
 
 struct TotalDisplayView: View {
     let shoppingList: ShoppingList
+    @Environment(LanguageService.self) private var languageService
 
     private var progress: Double {
         guard shoppingList.itemCount > 0 else { return 0 }
@@ -72,7 +73,7 @@ struct TotalDisplayView: View {
                     }
                     .frame(height: 6)
 
-                    Text("\(shoppingList.checkedItemCount) of \(shoppingList.itemCount) items checked")
+                    Text(String(format: languageService.string(forKey: "items_checked_format"), shoppingList.checkedItemCount, shoppingList.itemCount))
                         .font(.caption)
                         .foregroundStyle(.white.opacity(0.7))
                 }

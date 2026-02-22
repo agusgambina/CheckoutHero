@@ -126,7 +126,7 @@ private struct QuantityEditSheet: View {
 
     var body: some View {
         VStack(spacing: 24) {
-            Text("Quantity")
+            Text("quantity_header")
                 .font(.title3)
                 .fontWeight(.semibold)
                 .padding(.top, 8)
@@ -138,7 +138,7 @@ private struct QuantityEditSheet: View {
                 .keyboardType(.decimalPad)
                 .focused($focused)
 
-            Picker("Unit", selection: $selectedUnit) {
+            Picker("unit", selection: $selectedUnit) {
                 ForEach(ShoppingItem.commonUnits, id: \.self) {
                     Text($0).tag($0)
                 }
@@ -146,7 +146,7 @@ private struct QuantityEditSheet: View {
             .pickerStyle(.menu)
             .tint(.teal)
 
-            Button("Save") {
+            Button("save") {
                 commit()
                 dismiss()
             }
@@ -187,11 +187,17 @@ private struct PriceEditSheet: View {
     let onSave: () -> Void
 
     @Environment(\.dismiss) private var dismiss
+    @Environment(LanguageService.self) private var languageService
     @State private var valueText: String = ""
     @FocusState private var focused: Bool
 
     private var title: String {
-        editTotal ? "Total" : "Price per \(item.unit.isEmpty ? "unit" : item.unit)"
+        if editTotal {
+            return languageService.string(forKey: "total")
+        } else {
+            let unitName = item.unit.isEmpty ? languageService.string(forKey: "unit") : item.unit
+            return String(format: languageService.string(forKey: "price_per_unit_footer"), unitName)
+        }
     }
 
     private var hint: String? {
@@ -201,9 +207,9 @@ private struct PriceEditSheet: View {
             fmt.minimumFractionDigits = 0
             fmt.maximumFractionDigits = 2
             let qtyStr = fmt.string(from: NSNumber(value: item.quantity)) ?? "\(item.quantity)"
-            return "Adjusts price per unit (total ÷ \(qtyStr))"
+            return String(format: languageService.string(forKey: "adjusts_price_hint"), qtyStr)
         } else {
-            return "Quantity will be set to 1"
+            return languageService.string(forKey: "quantity_set_to_one_hint")
         }
     }
 
@@ -242,7 +248,7 @@ private struct PriceEditSheet: View {
                     .multilineTextAlignment(.center)
             }
 
-            Button("Save") {
+            Button("save") {
                 commit()
                 dismiss()
             }
