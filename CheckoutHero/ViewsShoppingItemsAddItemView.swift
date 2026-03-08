@@ -162,8 +162,13 @@ struct AddItemView: View {
 
         shoppingList.items.append(newItem)
         shoppingList.modifiedDate = Date()
-        try? modelContext.save()
+        saveContext()
         dismiss()
+    }
+
+    private func saveContext() {
+        do { try modelContext.save() }
+        catch { print("SwiftData save error: \(error)") }
     }
 }
 

@@ -33,3 +33,6 @@ fastlane/report.xml
 fastlane/Preview.html
 fastlane/screenshots/**/*.png
 fastlane/test_output
+
+# Private local guides (financial/tax info — never push)
+GUIDE.md

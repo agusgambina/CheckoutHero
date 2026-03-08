@@ -34,6 +34,7 @@ struct ShoppingItemRowView: View {
                     .animation(.spring(response: 0.3, dampingFraction: 0.7), value: item.isChecked)
             }
             .buttonStyle(.plain)
+            .accessibilityLabel(item.isChecked ? "\(item.name), checked" : "\(item.name), unchecked")
 
             // Item details
             VStack(alignment: .leading, spacing: 5) {
@@ -54,6 +55,9 @@ struct ShoppingItemRowView: View {
                             .background(Color.teal.opacity(0.1), in: RoundedRectangle(cornerRadius: 5))
                     }
                     .buttonStyle(.plain)
+                    .accessibilityLabel(Text(LocalizedStringKey("quantity_label")))
+                    .accessibilityValue(item.formattedQuantity)
+                    .accessibilityHint(Text(LocalizedStringKey("tap_to_edit_quantity")))
 
                     Text("·")
                         .font(.caption)
@@ -69,6 +73,9 @@ struct ShoppingItemRowView: View {
                             .background(Color.teal.opacity(0.1), in: RoundedRectangle(cornerRadius: 5))
                     }
                     .buttonStyle(.plain)
+                    .accessibilityLabel(Text(LocalizedStringKey("price_per_unit_header")))
+                    .accessibilityValue(item.formattedPricePerUnit(currencySymbol: currencySymbol))
+                    .accessibilityHint(Text(LocalizedStringKey("tap_to_edit_price")))
                 }
             }
 
@@ -82,6 +89,9 @@ struct ShoppingItemRowView: View {
                     .foregroundStyle(item.isChecked ? Color(.systemGray3) : .teal)
             }
             .buttonStyle(.plain)
+            .accessibilityLabel(Text(LocalizedStringKey("total")))
+            .accessibilityValue(item.formattedTotalPrice(currencySymbol: currencySymbol))
+            .accessibilityHint(Text(LocalizedStringKey("tap_to_edit_total")))
         }
         .padding(.vertical, 8)
         .contentShape(Rectangle())
@@ -105,7 +115,8 @@ struct ShoppingItemRowView: View {
 
     private func saveItem() {
         item.shoppingList?.modifiedDate = Date()
-        try? modelContext.save()
+        do { try modelContext.save() }
+        catch { print("SwiftData save error: \(error)") }
     }
 }
 
