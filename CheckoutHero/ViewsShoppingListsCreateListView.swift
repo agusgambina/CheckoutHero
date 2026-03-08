@@ -103,7 +103,7 @@ struct CreateListView: View {
     
     private func saveList() {
         let trimmedName = name.trimmingCharacters(in: .whitespacesAndNewlines)
-        
+
         if let list = listToEdit {
             // Edit existing list
             list.name = trimmedName
@@ -117,9 +117,14 @@ struct CreateListView: View {
             )
             modelContext.insert(newList)
         }
-        
-        try? modelContext.save()
+
+        saveContext()
         dismiss()
+    }
+
+    private func saveContext() {
+        do { try modelContext.save() }
+        catch { print("SwiftData save error: \(error)") }
     }
 }
 

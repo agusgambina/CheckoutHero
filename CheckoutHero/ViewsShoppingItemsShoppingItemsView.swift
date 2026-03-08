@@ -144,10 +144,10 @@ struct ShoppingItemsView: View {
         withAnimation {
             item.isChecked.toggle()
             shoppingList.modifiedDate = Date()
-            try? modelContext.save()
+            saveContext()
         }
     }
-    
+
     private func deleteItem(_ item: ShoppingItem) {
         withAnimation {
             if let index = shoppingList.items.firstIndex(where: { $0.id == item.id }) {
@@ -155,21 +155,21 @@ struct ShoppingItemsView: View {
             }
             modelContext.delete(item)
             shoppingList.modifiedDate = Date()
-            try? modelContext.save()
+            saveContext()
         }
         itemToDelete = nil
     }
-    
+
     private func uncheckAllItems() {
         withAnimation {
             for item in shoppingList.items {
                 item.isChecked = false
             }
             shoppingList.modifiedDate = Date()
-            try? modelContext.save()
+            saveContext()
         }
     }
-    
+
     private func deleteCheckedItems() {
         withAnimation {
             let checkedItems = shoppingList.items.filter { $0.isChecked }
@@ -180,8 +180,13 @@ struct ShoppingItemsView: View {
                 modelContext.delete(item)
             }
             shoppingList.modifiedDate = Date()
-            try? modelContext.save()
+            saveContext()
         }
+    }
+
+    private func saveContext() {
+        do { try modelContext.save() }
+        catch { print("SwiftData save error: \(error)") }
     }
 }
 

@@ -114,13 +114,14 @@ struct ShoppingListsView: View {
     private func deleteList(_ list: ShoppingList) {
         withAnimation {
             modelContext.delete(list)
-            try? modelContext.save()
+            saveContext()
         }
     }
 
     private func duplicateList(_ list: ShoppingList) {
+        let suffix = NSLocalizedString("duplicate_suffix", comment: "")
         let newList = ShoppingList(
-            name: "\(list.name) (Copy)",
+            name: "\(list.name) \(suffix)",
             currencySymbol: list.currencySymbol
         )
 
@@ -137,7 +138,12 @@ struct ShoppingListsView: View {
         }
 
         modelContext.insert(newList)
-        try? modelContext.save()
+        saveContext()
+    }
+
+    private func saveContext() {
+        do { try modelContext.save() }
+        catch { print("SwiftData save error: \(error)") }
     }
 }
 
