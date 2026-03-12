@@ -13,6 +13,8 @@ struct AuthSignInView: View {
     @Environment(\.colorScheme) private var colorScheme
     @Environment(\.dismiss) private var dismiss
 
+    @State private var showDeleteConfirmation = false
+
     var body: some View {
         NavigationStack {
             Form {
@@ -66,6 +68,26 @@ struct AuthSignInView: View {
                     dismiss()
                 }
             }
+            Section {
+                Button(LocalizedStringKey("delete_account"), role: .destructive) {
+                    showDeleteConfirmation = true
+                }
+            } footer: {
+                Text(LocalizedStringKey("delete_account_footer"))
+            }
+        }
+        .confirmationDialog(
+            LocalizedStringKey("delete_account_confirmation_title"),
+            isPresented: $showDeleteConfirmation,
+            titleVisibility: .visible
+        ) {
+            Button(LocalizedStringKey("delete_account_confirm"), role: .destructive) {
+                authService.deleteAccount()
+                dismiss()
+            }
+            Button(LocalizedStringKey("cancel"), role: .cancel) {}
+        } message: {
+            Text(LocalizedStringKey("delete_account_confirmation_message"))
         }
     }
 }

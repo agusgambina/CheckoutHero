@@ -54,6 +54,12 @@ enum AuthState {
         authState = .guest
     }
 
+    func deleteAccount() {
+        keychainDelete(key: userIDKey)
+        keychainDelete(key: nameKey)
+        authState = .guest
+    }
+
     // MARK: - Keychain helpers
 
     private func restoreFromKeychain() {
