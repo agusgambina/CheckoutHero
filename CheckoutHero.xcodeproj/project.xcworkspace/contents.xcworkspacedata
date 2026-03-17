@@ -4,4 +4,13 @@
    <FileRef
       location = "self:">
    </FileRef>
+   <FileRef
+      location = "group:DocumentationAppStoreConnect-IAP-Setup.md">
+   </FileRef>
+   <FileRef
+      location = "group:DocumentationAPP-REVIEW-NOTES.md">
+   </FileRef>
+   <FileRef
+      location = "group:DocumentationREVIEW-NOTES-COPY-PASTE.md">
+   </FileRef>
 </Workspace>

@@ -51,32 +51,56 @@ struct TipJarView: View {
     }
 
     private var tipListView: some View {
-        Form {
-            Section {
-                ForEach(storeKit.products, id: \.id) { product in
-                    Button {
-                        Task { await buyTip(product) }
-                    } label: {
-                        HStack {
-                            Image(systemName: iconName(for: product.id))
-                                .foregroundStyle(iconColor(for: product.id))
-                                .font(.title2)
-                            VStack(alignment: .leading) {
-                                Text(LocalizedStringKey(labelKey(for: product.id)))
-                                    .foregroundStyle(.primary)
-                            }
-                            Spacer()
-                            Text(product.displayPrice)
-                                .foregroundStyle(.secondary)
+        ScrollView {
+            VStack(spacing: 20) {
+                // Header Section
+                VStack(spacing: 12) {
+                    Image(systemName: "heart.circle.fill")
+                        .font(.system(size: 64))
+                        .foregroundStyle(.pink.gradient)
+                        .symbolEffect(.pulse)
+                    
+                    Text(LocalizedStringKey("tip_jar_header"))
+                        .font(.title2)
+                        .fontWeight(.bold)
+                        .multilineTextAlignment(.center)
+                    
+                    Text(LocalizedStringKey("tip_jar_description"))
+                        .font(.subheadline)
+                        .foregroundStyle(.secondary)
+                        .multilineTextAlignment(.center)
+                        .padding(.horizontal)
+                }
+                .padding(.top, 20)
+                .padding(.bottom, 10)
+                
+                // Tip Options
+                VStack(spacing: 12) {
+                    ForEach(storeKit.products, id: \.id) { product in
+                        TipOptionCard(
+                            product: product,
+                            icon: iconName(for: product.id),
+                            color: iconColor(for: product.id),
+                            label: labelKey(for: product.id),
+                            description: descriptionKey(for: product.id)
+                        ) {
+                            Task { await buyTip(product) }
                         }
                     }
                 }
-            } header: {
-                Text(LocalizedStringKey("tip_jar_header"))
-            } footer: {
+                .padding(.horizontal)
+                
+                // Footer Note
                 Text(LocalizedStringKey("tip_jar_footer"))
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+                    .multilineTextAlignment(.center)
+                    .padding(.horizontal)
+                    .padding(.top, 8)
+                    .padding(.bottom, 20)
             }
         }
+        .background(Color(.systemGroupedBackground))
     }
 
     private var thankYouView: some View {
@@ -133,6 +157,73 @@ struct TipJarView: View {
         case "tip_large": return "tip_large_label"
         default: return productID
         }
+    }
+    
+    private func descriptionKey(for productID: String) -> String {
+        switch productID {
+        case "tip_small": return "tip_small_description"
+        case "tip_medium": return "tip_medium_description"
+        case "tip_large": return "tip_large_description"
+        default: return ""
+        }
+    }
+}
+
+// MARK: - Tip Option Card
+
+struct TipOptionCard: View {
+    let product: Product
+    let icon: String
+    let color: Color
+    let label: String
+    let description: String
+    let action: () -> Void
+    
+    var body: some View {
+        Button(action: action) {
+            HStack(spacing: 16) {
+                // Icon
+                ZStack {
+                    Circle()
+                        .fill(color.opacity(0.15))
+                        .frame(width: 56, height: 56)
+                    
+                    Image(systemName: icon)
+                        .font(.system(size: 24))
+                        .foregroundStyle(color)
+                }
+                
+                // Text Content
+                VStack(alignment: .leading, spacing: 4) {
+                    Text(LocalizedStringKey(label))
+                        .font(.headline)
+                        .foregroundStyle(.primary)
+                    
+                    Text(LocalizedStringKey(description))
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                        .lineLimit(2)
+                }
+                
+                Spacer()
+                
+                // Price
+                VStack(spacing: 2) {
+                    Text(product.displayPrice)
+                        .font(.title3)
+                        .fontWeight(.semibold)
+                        .foregroundStyle(.primary)
+                }
+            }
+            .padding(16)
+            .background(Color(.secondarySystemGroupedBackground))
+            .clipShape(RoundedRectangle(cornerRadius: 12))
+            .overlay(
+                RoundedRectangle(cornerRadius: 12)
+                    .strokeBorder(color.opacity(0.2), lineWidth: 1)
+            )
+        }
+        .buttonStyle(.plain)
     }
 }
 
