@@ -68,3 +68,34 @@ struct CurrencyFormatterServiceTests {
         #expect(CurrencyFormatterService.parseAmount(input, locale: enUS) == nil)
     }
 }
+
+@MainActor
+@Suite("NumberInput (typed quantities and prices)")
+struct NumberInputTests {
+
+    @Test(arguments: [
+        ("1.25", "1.25"), ("1,25", "1.25"), ("3", "3"), ("0", "0"),
+        ("0,5", "0.5"), (".5", "0.5"), (",5", "0.5"), ("12.", "12"), (" 7,25 ", "7.25"), ("1234,5", "1234.5"),
+    ])
+    func parsesDotOrCommaDecimals(input: String, expected: String) {
+        #expect(NumberInput.decimal(input) == Decimal(string: expected))
+    }
+
+    @Test(arguments: ["", " ", ".", ",", "abc", "1,2,3", "1.234,5", "-1", "1e3", "1.2.3", "$5"])
+    func rejectsNonNumbers(input: String) {
+        #expect(NumberInput.decimal(input) == nil)
+    }
+
+    @Test func commaPriceNoLongerTruncates() {
+        // Regression: Decimal(string: "1,25") silently returned 1
+        let price = NumberInput.decimal("1,25")!
+        let quantity = NumberInput.double("3")!
+        #expect(Decimal(quantity) * price == Decimal(string: "3.75"))
+    }
+
+    @Test func doubleParsesCommaQuantities() {
+        #expect(NumberInput.double("1,5") == 1.5)
+        #expect(NumberInput.double("2") == 2)
+        #expect(NumberInput.double("x") == nil)
+    }
+}

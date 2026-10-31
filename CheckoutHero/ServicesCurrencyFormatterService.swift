@@ -158,3 +158,27 @@ extension CurrencyFormatterService {
         }
     }
 }
+
+// MARK: - User Input Parsing
+
+/// Parses numbers typed into quantity/price fields.
+///
+/// Accepts either "," or "." as the decimal separator, so "1,25" and "1.25" both mean 1.25
+/// regardless of locale (the decimal pad shows "," in many regions). Returns `nil` for anything
+/// that is not a plain non-negative number, instead of silently reading a prefix the way
+/// `Decimal(string:)` does ("1,25" → 1).
+enum NumberInput {
+    private static let pattern = /^\d*[.,]?\d*$/
+
+    static func decimal(_ text: String) -> Decimal? {
+        let trimmed = text.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !trimmed.isEmpty, trimmed != ".", trimmed != ",",
+              trimmed.wholeMatch(of: pattern) != nil else { return nil }
+        let normalized = trimmed.replacingOccurrences(of: ",", with: ".")
+        return Decimal(string: normalized, locale: Locale(identifier: "en_US_POSIX"))
+    }
+
+    static func double(_ text: String) -> Double? {
+        decimal(text).map { NSDecimalNumber(decimal: $0).doubleValue }
+    }
+}

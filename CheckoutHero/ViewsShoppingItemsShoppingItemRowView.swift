@@ -133,7 +133,7 @@ private struct QuantityEditSheet: View {
     @FocusState private var focused: Bool
 
     private var canCommit: Bool {
-        quantityText.isEmpty || (Double(quantityText) != nil && Double(quantityText)! >= 0)
+        quantityText.isEmpty || (NumberInput.double(quantityText) != nil && NumberInput.double(quantityText)! >= 0)
     }
 
     var body: some View {
@@ -181,7 +181,7 @@ private struct QuantityEditSheet: View {
     }
 
     private func commit() {
-        if let qty = Double(quantityText), qty >= 0 {
+        if let qty = NumberInput.double(quantityText), qty >= 0 {
             item.quantity = qty
         }
         item.unit = selectedUnit
@@ -227,7 +227,7 @@ private struct PriceEditSheet: View {
 
     private var canCommit: Bool {
         guard !valueText.isEmpty else { return true }
-        guard let d = Decimal(string: valueText) else { return false }
+        guard let d = NumberInput.decimal(valueText) else { return false }
         return d >= 0
     }
 
@@ -284,12 +284,13 @@ private struct PriceEditSheet: View {
         fmt.minimumFractionDigits = 0
         fmt.maximumFractionDigits = 4
         fmt.numberStyle = .decimal
+        fmt.usesGroupingSeparator = false // keep "1234,5" editable/parseable, not "1.234,5"
         return fmt.string(from: NSDecimalNumber(decimal: d)) ?? "0"
     }
 
     private func commit() {
         let parsed = valueText.isEmpty ? (editTotal ? item.totalPrice : item.pricePerUnit)
-                                       : (Decimal(string: valueText) ?? (editTotal ? item.totalPrice : item.pricePerUnit))
+                                       : (NumberInput.decimal(valueText) ?? (editTotal ? item.totalPrice : item.pricePerUnit))
         guard parsed >= 0 else { return }
 
         if editTotal {

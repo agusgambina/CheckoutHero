@@ -36,3 +36,6 @@ fastlane/test_output
 
 # Private local guides (financial/tax info — never push)
 GUIDE.md
+
+# Generated App Store screenshots
+screenshots/

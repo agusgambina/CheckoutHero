@@ -133,8 +133,8 @@ struct AddItemView: View {
     }
     
     private func calculateTotalPreview() -> String? {
-        guard let qty = Double(quantity),
-              let price = Decimal(string: pricePerUnit),
+        guard let qty = NumberInput.double(quantity),
+              let price = NumberInput.decimal(pricePerUnit),
               qty > 0, price >= 0 else {
             return nil
         }
@@ -148,8 +148,8 @@ struct AddItemView: View {
     
     private func addItem() {
         let trimmedName = name.trimmingCharacters(in: .whitespacesAndNewlines)
-        let qty = Double(quantity) ?? 1.0
-        let price = Decimal(string: pricePerUnit) ?? 0
+        let qty = NumberInput.double(quantity) ?? 1.0
+        let price = NumberInput.decimal(pricePerUnit) ?? 0
 
         if price < 0 {
             errorMessage = NSLocalizedString("item_validation_negative_price", value: "Price cannot be negative", comment: "")
