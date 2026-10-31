@@ -35,6 +35,7 @@ struct SettingsView: View {
                         Label(LocalizedStringKey("support_checkout_hero_row"), systemImage: "heart")
                             .foregroundStyle(.primary)
                     }
+                    .accessibilityIdentifier("tipJarRow")
                 } header: {
                     Text(LocalizedStringKey("support_section_header"))
                 }

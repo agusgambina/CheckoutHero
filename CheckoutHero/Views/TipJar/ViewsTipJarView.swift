@@ -10,27 +10,59 @@ import StoreKit
 
 struct TipJarView: View {
     @Environment(StoreKitService.self) private var storeKit
+    @Environment(\.purchase) private var purchase
+    @Environment(\.dismiss) private var dismiss
+
     @State private var showingThankYou = false
+    @State private var purchasingProductID: String?
+    @State private var purchaseErrorMessage: String?
+    @State private var showingPendingAlert = false
 
     var body: some View {
         NavigationStack {
             Group {
-                if storeKit.isLoading {
-                    loadingView
-                } else if storeKit.products.isEmpty {
-                    unavailableView
+                if storeKit.products.isEmpty {
+                    if case .failed = storeKit.loadState {
+                        unavailableView
+                    } else {
+                        loadingView
+                    }
                 } else {
                     tipListView
                 }
             }
             .navigationTitle(LocalizedStringKey("support_checkout_hero"))
             .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .confirmationAction) {
+                    Button(LocalizedStringKey("done")) { dismiss() }
+                        .accessibilityIdentifier("tipJarDoneButton")
+                }
+            }
         }
         .task {
-            await storeKit.loadProducts()
+            if storeKit.products.isEmpty {
+                await storeKit.loadProducts()
+            }
         }
         .sheet(isPresented: $showingThankYou) {
             thankYouView
+        }
+        .alert(
+            LocalizedStringKey("purchase_failed_title"),
+            isPresented: Binding(
+                get: { purchaseErrorMessage != nil },
+                set: { if !$0 { purchaseErrorMessage = nil } }
+            )
+        ) {
+            Button(LocalizedStringKey("ok"), role: .cancel) {}
+        } message: {
+            Text(purchaseErrorMessage ?? "")
+        }
+        .alert(LocalizedStringKey("purchase_pending_title"), isPresented: $showingPendingAlert) {
+            Button(LocalizedStringKey("ok"), role: .cancel) {}
+        } message: {
+            Text(LocalizedStringKey("purchase_pending_message"))
         }
     }
 
@@ -47,6 +79,13 @@ struct TipJarView: View {
             Label(LocalizedStringKey("tips_unavailable"), systemImage: "exclamationmark.triangle")
         } description: {
             Text(LocalizedStringKey("tips_unavailable_description"))
+        } actions: {
+            Button(LocalizedStringKey("try_again")) {
+                Task { await storeKit.loadProducts() }
+            }
+            .buttonStyle(.borderedProminent)
+            .tint(.teal)
+            .accessibilityIdentifier("tipJarRetryButton")
         }
     }
 
@@ -82,10 +121,13 @@ struct TipJarView: View {
                             icon: iconName(for: product.id),
                             color: iconColor(for: product.id),
                             label: labelKey(for: product.id),
-                            description: descriptionKey(for: product.id)
+                            description: descriptionKey(for: product.id),
+                            isPurchasing: purchasingProductID == product.id
                         ) {
                             Task { await buyTip(product) }
                         }
+                        .disabled(purchasingProductID != nil)
+                        .accessibilityIdentifier("tip_\(product.id)")
                     }
                 }
                 .padding(.horizontal)
@@ -124,11 +166,23 @@ struct TipJarView: View {
     }
 
     private func buyTip(_ product: Product) async {
+        guard purchasingProductID == nil else { return }
+        purchasingProductID = product.id
+        defer { purchasingProductID = nil }
+
         do {
-            let purchased = try await storeKit.purchase(product)
-            if purchased { showingThankYou = true }
+            let result = try await purchase(product)
+            switch try await storeKit.handle(result) {
+            case .success:
+                showingThankYou = true
+            case .pending:
+                showingPendingAlert = true
+            case .cancelled:
+                break
+            }
         } catch {
             print("Purchase error: \(error)")
+            purchaseErrorMessage = error.localizedDescription
         }
     }
 
@@ -177,6 +231,7 @@ struct TipOptionCard: View {
     let color: Color
     let label: String
     let description: String
+    var isPurchasing = false
     let action: () -> Void
     
     var body: some View {
@@ -209,10 +264,14 @@ struct TipOptionCard: View {
                 
                 // Price
                 VStack(spacing: 2) {
-                    Text(product.displayPrice)
-                        .font(.title3)
-                        .fontWeight(.semibold)
-                        .foregroundStyle(.primary)
+                    if isPurchasing {
+                        ProgressView()
+                    } else {
+                        Text(product.displayPrice)
+                            .font(.title3)
+                            .fontWeight(.semibold)
+                            .foregroundStyle(.primary)
+                    }
                 }
             }
             .padding(16)

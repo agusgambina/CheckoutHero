@@ -35,6 +35,7 @@ struct ShoppingItemRowView: View {
             }
             .buttonStyle(.plain)
             .accessibilityLabel(item.isChecked ? "\(item.name), checked" : "\(item.name), unchecked")
+            .accessibilityIdentifier("toggleItemButton")
 
             // Item details
             VStack(alignment: .leading, spacing: 5) {

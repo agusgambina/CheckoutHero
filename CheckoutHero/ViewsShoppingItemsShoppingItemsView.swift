@@ -44,6 +44,7 @@ struct ShoppingItemsView: View {
                 } label: {
                     Label("add_item", systemImage: "plus")
                 }
+                .accessibilityIdentifier("addItemButton")
             }
             
             ToolbarItem(placement: .secondaryAction) {

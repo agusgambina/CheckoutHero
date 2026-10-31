@@ -36,6 +36,7 @@ struct ShoppingListsView: View {
                         Label("settings", systemImage: "gearshape")
                     }
                     .tint(.teal)
+                    .accessibilityIdentifier("settingsButton")
                 }
                 ToolbarItem(placement: .primaryAction) {
                     Button {
@@ -44,6 +45,7 @@ struct ShoppingListsView: View {
                         Label("add_list", systemImage: "plus")
                     }
                     .tint(.teal)
+                    .accessibilityIdentifier("addListButton")
                 }
             }
             .sheet(isPresented: $showingSettings) {

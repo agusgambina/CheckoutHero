@@ -14,6 +14,19 @@ struct CheckoutHeroApp: App {
     @State private var authService = AuthenticationService()
     @State private var storeKitService = StoreKitService()
 
+    /// UI tests launch with `-UITesting` so they start from an empty, in-memory store
+    /// and never touch the user's real data.
+    private static let isUITesting = ProcessInfo.processInfo.arguments.contains("-UITesting")
+
+    private let container: ModelContainer = {
+        let config = ModelConfiguration(isStoredInMemoryOnly: CheckoutHeroApp.isUITesting)
+        do {
+            return try ModelContainer(for: ShoppingList.self, ShoppingItem.self, configurations: config)
+        } catch {
+            fatalError("Failed to create ModelContainer: \(error)")
+        }
+    }()
+
     var body: some Scene {
         WindowGroup {
             ContentView()
@@ -23,6 +36,6 @@ struct CheckoutHeroApp: App {
                 .environment(\.locale, languageService.locale)
                 .id(languageService.selectedLanguage)
         }
-        .modelContainer(for: [ShoppingList.self, ShoppingItem.self])
+        .modelContainer(container)
     }
 }

@@ -29,6 +29,7 @@ struct TotalDisplayView: View {
                     Text(shoppingList.formattedTotal())
                         .font(.system(size: 42, weight: .bold, design: .rounded))
                         .foregroundStyle(.white)
+                        .accessibilityIdentifier("totalAmountLabel")
                 }
 
                 Spacer()

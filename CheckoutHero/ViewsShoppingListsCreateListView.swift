@@ -50,6 +50,7 @@ struct CreateListView: View {
                 Section {
                     TextField("list_name_placeholder", text: $name)
                         .textInputAutocapitalization(.words)
+                        .accessibilityIdentifier("listNameField")
                 } header: {
                     Text("list_name_header")
                 }
@@ -93,6 +94,7 @@ struct CreateListView: View {
                         saveList()
                     }
                     .disabled(!canSave)
+                    .accessibilityIdentifier("saveListButton")
                 }
             }
             .sheet(isPresented: $showingCurrencyPicker) {

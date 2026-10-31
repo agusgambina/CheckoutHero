@@ -10,9 +10,28 @@
 		5B4065752F643A1C00D021A9 /* StoreKit.storekit in Resources */ = {isa = PBXBuildFile; fileRef = 5B4065742F643A1C00D021A9 /* StoreKit.storekit */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		5BE96EAD2F48E700005B0F33 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5BE96E7A2F48E671005B0F33 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 5BE96E812F48E671005B0F33;
+			remoteInfo = CheckoutHero;
+		};
+		5BE96EAE2F48E700005B0F33 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5BE96E7A2F48E671005B0F33 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 5BE96E812F48E671005B0F33;
+			remoteInfo = CheckoutHero;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
 		5B4065742F643A1C00D021A9 /* StoreKit.storekit */ = {isa = PBXFileReference; lastKnownFileType = text; path = StoreKit.storekit; sourceTree = "<group>"; };
 		5BE96E822F48E671005B0F33 /* CheckoutHero.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CheckoutHero.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		5BE96EA12F48E700005B0F33 /* CheckoutHeroTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CheckoutHeroTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		5BE96EA22F48E700005B0F33 /* CheckoutHeroUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CheckoutHeroUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -21,10 +40,34 @@
 			path = CheckoutHero;
 			sourceTree = "<group>";
 		};
+		5BE96EA32F48E700005B0F33 /* CheckoutHeroTests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = CheckoutHeroTests;
+			sourceTree = "<group>";
+		};
+		5BE96EA42F48E700005B0F33 /* CheckoutHeroUITests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = CheckoutHeroUITests;
+			sourceTree = "<group>";
+		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		5BE96E7F2F48E671005B0F33 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5BE96EA82F48E700005B0F33 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5BE96EAB2F48E700005B0F33 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -38,6 +81,8 @@
 			isa = PBXGroup;
 			children = (
 				5BE96E842F48E671005B0F33 /* CheckoutHero */,
+				5BE96EA32F48E700005B0F33 /* CheckoutHeroTests */,
+				5BE96EA42F48E700005B0F33 /* CheckoutHeroUITests */,
 				5BE96E832F48E671005B0F33 /* Products */,
 				5B4065742F643A1C00D021A9 /* StoreKit.storekit */,
 			);
@@ -47,6 +92,8 @@
 			isa = PBXGroup;
 			children = (
 				5BE96E822F48E671005B0F33 /* CheckoutHero.app */,
+				5BE96EA12F48E700005B0F33 /* CheckoutHeroTests.xctest */,
+				5BE96EA22F48E700005B0F33 /* CheckoutHeroUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -76,6 +123,52 @@
 			productReference = 5BE96E822F48E671005B0F33 /* CheckoutHero.app */;
 			productType = "com.apple.product-type.application";
 		};
+		5BE96EA52F48E700005B0F33 /* CheckoutHeroTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 5BE96EB32F48E700005B0F33 /* Build configuration list for PBXNativeTarget "CheckoutHeroTests" */;
+			buildPhases = (
+				5BE96EA72F48E700005B0F33 /* Sources */,
+				5BE96EA82F48E700005B0F33 /* Frameworks */,
+				5BE96EA92F48E700005B0F33 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				5BE96EAF2F48E700005B0F33 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				5BE96EA32F48E700005B0F33 /* CheckoutHeroTests */,
+			);
+			name = CheckoutHeroTests;
+			packageProductDependencies = (
+			);
+			productName = CheckoutHeroTests;
+			productReference = 5BE96EA12F48E700005B0F33 /* CheckoutHeroTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		5BE96EA62F48E700005B0F33 /* CheckoutHeroUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 5BE96EB62F48E700005B0F33 /* Build configuration list for PBXNativeTarget "CheckoutHeroUITests" */;
+			buildPhases = (
+				5BE96EAA2F48E700005B0F33 /* Sources */,
+				5BE96EAB2F48E700005B0F33 /* Frameworks */,
+				5BE96EAC2F48E700005B0F33 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				5BE96EB02F48E700005B0F33 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				5BE96EA42F48E700005B0F33 /* CheckoutHeroUITests */,
+			);
+			name = CheckoutHeroUITests;
+			packageProductDependencies = (
+			);
+			productName = CheckoutHeroUITests;
+			productReference = 5BE96EA22F48E700005B0F33 /* CheckoutHeroUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -88,6 +181,14 @@
 				TargetAttributes = {
 					5BE96E812F48E671005B0F33 = {
 						CreatedOnToolsVersion = 26.2;
+					};
+					5BE96EA52F48E700005B0F33 = {
+						CreatedOnToolsVersion = 26.2;
+						TestTargetID = 5BE96E812F48E671005B0F33;
+					};
+					5BE96EA62F48E700005B0F33 = {
+						CreatedOnToolsVersion = 26.2;
+						TestTargetID = 5BE96E812F48E671005B0F33;
 					};
 				};
 			};
@@ -107,6 +208,8 @@
 			projectRoot = "";
 			targets = (
 				5BE96E812F48E671005B0F33 /* CheckoutHero */,
+				5BE96EA52F48E700005B0F33 /* CheckoutHeroTests */,
+				5BE96EA62F48E700005B0F33 /* CheckoutHeroUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -120,6 +223,20 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		5BE96EA92F48E700005B0F33 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5BE96EAC2F48E700005B0F33 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -130,7 +247,34 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		5BE96EA72F48E700005B0F33 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5BE96EAA2F48E700005B0F33 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		5BE96EAF2F48E700005B0F33 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 5BE96E812F48E671005B0F33 /* CheckoutHero */;
+			targetProxy = 5BE96EAD2F48E700005B0F33 /* PBXContainerItemProxy */;
+		};
+		5BE96EB02F48E700005B0F33 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 5BE96E812F48E671005B0F33 /* CheckoutHero */;
+			targetProxy = 5BE96EAE2F48E700005B0F33 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		5BE96E8B2F48E672005B0F33 /* Debug */ = {
@@ -261,7 +405,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = CheckoutHero/CheckoutHero.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = 296P7R7T9M;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -295,7 +439,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = CheckoutHero/CheckoutHero.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = 296P7R7T9M;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -322,6 +466,92 @@
 			};
 			name = Release;
 		};
+		5BE96EB12F48E700005B0F33 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 296P7R7T9M;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = littlebit.CheckoutHeroTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/CheckoutHero.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/CheckoutHero";
+			};
+			name = Debug;
+		};
+		5BE96EB22F48E700005B0F33 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 296P7R7T9M;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = littlebit.CheckoutHeroTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/CheckoutHero.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/CheckoutHero";
+			};
+			name = Release;
+		};
+		5BE96EB42F48E700005B0F33 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 296P7R7T9M;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = littlebit.CheckoutHeroUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = CheckoutHero;
+			};
+			name = Debug;
+		};
+		5BE96EB52F48E700005B0F33 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 296P7R7T9M;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = littlebit.CheckoutHeroUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = CheckoutHero;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -339,6 +569,24 @@
 			buildConfigurations = (
 				5BE96E8E2F48E672005B0F33 /* Debug */,
 				5BE96E8F2F48E672005B0F33 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		5BE96EB32F48E700005B0F33 /* Build configuration list for PBXNativeTarget "CheckoutHeroTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5BE96EB12F48E700005B0F33 /* Debug */,
+				5BE96EB22F48E700005B0F33 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		5BE96EB62F48E700005B0F33 /* Build configuration list for PBXNativeTarget "CheckoutHeroUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5BE96EB42F48E700005B0F33 /* Debug */,
+				5BE96EB52F48E700005B0F33 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

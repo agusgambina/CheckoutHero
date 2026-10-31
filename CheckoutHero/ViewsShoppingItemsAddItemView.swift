@@ -38,6 +38,7 @@ struct AddItemView: View {
                     TextField("item_name_placeholder", text: $name)
                         .textInputAutocapitalization(.words)
                         .focused($focusedField, equals: .name)
+                        .accessibilityIdentifier("itemNameField")
                 } header: {
                     Text("item_name_header")
                 }
@@ -47,6 +48,7 @@ struct AddItemView: View {
                         TextField("quantity_placeholder", text: $quantity)
                             .keyboardType(.decimalPad)
                             .focused($focusedField, equals: .quantity)
+                            .accessibilityIdentifier("itemQuantityField")
                         
                         Divider()
                         
@@ -72,6 +74,7 @@ struct AddItemView: View {
                         TextField("price_placeholder", text: $pricePerUnit)
                             .keyboardType(.decimalPad)
                             .focused($focusedField, equals: .price)
+                            .accessibilityIdentifier("itemPriceField")
                     }
                 } header: {
                     Text("price_per_unit_header")
@@ -108,6 +111,7 @@ struct AddItemView: View {
                         addItem()
                     }
                     .disabled(!canSave)
+                    .accessibilityIdentifier("confirmAddItemButton")
                 }
                 
                 ToolbarItemGroup(placement: .keyboard) {
