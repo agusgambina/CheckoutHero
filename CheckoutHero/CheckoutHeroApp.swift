@@ -12,7 +12,6 @@ import SwiftData
 struct CheckoutHeroApp: App {
     @State private var languageService = LanguageService()
     @State private var authService = AuthenticationService()
-    @State private var storeKitService = StoreKitService()
 
     /// UI tests launch with `-UITesting` so they start from an empty, in-memory store
     /// and never touch the user's real data.
@@ -32,7 +31,6 @@ struct CheckoutHeroApp: App {
             ContentView()
                 .environment(languageService)
                 .environment(authService)
-                .environment(storeKitService)
                 .environment(\.locale, languageService.locale)
                 .id(languageService.selectedLanguage)
         }

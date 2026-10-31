@@ -6,10 +6,6 @@
 	objectVersion = 77;
 	objects = {
 
-/* Begin PBXBuildFile section */
-		5B4065752F643A1C00D021A9 /* StoreKit.storekit in Resources */ = {isa = PBXBuildFile; fileRef = 5B4065742F643A1C00D021A9 /* StoreKit.storekit */; };
-/* End PBXBuildFile section */
-
 /* Begin PBXContainerItemProxy section */
 		5BE96EAD2F48E700005B0F33 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -28,7 +24,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		5B4065742F643A1C00D021A9 /* StoreKit.storekit */ = {isa = PBXFileReference; lastKnownFileType = text; path = StoreKit.storekit; sourceTree = "<group>"; };
 		5BE96E822F48E671005B0F33 /* CheckoutHero.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CheckoutHero.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5BE96EA12F48E700005B0F33 /* CheckoutHeroTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CheckoutHeroTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		5BE96EA22F48E700005B0F33 /* CheckoutHeroUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CheckoutHeroUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -84,7 +79,6 @@
 				5BE96EA32F48E700005B0F33 /* CheckoutHeroTests */,
 				5BE96EA42F48E700005B0F33 /* CheckoutHeroUITests */,
 				5BE96E832F48E671005B0F33 /* Products */,
-				5B4065742F643A1C00D021A9 /* StoreKit.storekit */,
 			);
 			sourceTree = "<group>";
 		};
@@ -219,7 +213,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5B4065752F643A1C00D021A9 /* StoreKit.storekit in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -409,6 +402,7 @@
 				DEVELOPMENT_TEAM = 296P7R7T9M;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSRemindersFullAccessUsageDescription = "CheckoutHero uses Reminders to import your lists as shopping items.";
 				INFOPLIST_KEY_NSRemindersUsageDescription = "CheckoutHero uses Reminders to import your lists as shopping items.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -443,6 +437,7 @@
 				DEVELOPMENT_TEAM = 296P7R7T9M;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSRemindersFullAccessUsageDescription = "CheckoutHero uses Reminders to import your lists as shopping items.";
 				INFOPLIST_KEY_NSRemindersUsageDescription = "CheckoutHero uses Reminders to import your lists as shopping items.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;

@@ -10,10 +10,8 @@ import SwiftUI
 struct SettingsView: View {
     @Environment(LanguageService.self) private var languageService
     @Environment(AuthenticationService.self) private var authService
-    @Environment(StoreKitService.self) private var storeKitService
     @Environment(\.dismiss) private var dismiss
 
-    @State private var showingTipJar = false
     @State private var showingAuth = false
     @State private var showingReminders = false
 
@@ -27,19 +25,6 @@ struct SettingsView: View {
         @Bindable var bindableService = languageService
         NavigationStack {
             Form {
-                // Section 1: Support
-                Section {
-                    Button {
-                        showingTipJar = true
-                    } label: {
-                        Label(LocalizedStringKey("support_checkout_hero_row"), systemImage: "heart")
-                            .foregroundStyle(.primary)
-                    }
-                    .accessibilityIdentifier("tipJarRow")
-                } header: {
-                    Text(LocalizedStringKey("support_section_header"))
-                }
-
                 // Section 2: Account
                 Section {
                     Button {
@@ -68,6 +53,7 @@ struct SettingsView: View {
                         Label(LocalizedStringKey("import_from_reminders"), systemImage: "list.bullet")
                             .foregroundStyle(.primary)
                     }
+                    .accessibilityIdentifier("remindersImportRow")
                 } header: {
                     Text(LocalizedStringKey("import_section_header"))
                 }
@@ -105,10 +91,6 @@ struct SettingsView: View {
                 }
             }
         }
-        .sheet(isPresented: $showingTipJar) {
-            TipJarView()
-                .environment(storeKitService)
-        }
         .sheet(isPresented: $showingAuth) {
             AuthSignInView()
                 .environment(authService)
@@ -143,5 +125,4 @@ struct SettingsView: View {
     SettingsView()
         .environment(LanguageService())
         .environment(AuthenticationService())
-        .environment(StoreKitService())
 }

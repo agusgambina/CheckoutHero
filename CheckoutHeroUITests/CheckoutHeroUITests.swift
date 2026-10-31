@@ -84,28 +84,75 @@ final class CheckoutHeroUITests: XCTestCase {
         XCTAssertTrue(app.navigationBars["Shopping Lists"].waitForExistence(timeout: 5))
     }
 
-    /// The path App Review takes: Settings → Support CheckoutHero.
-    /// Uses the scheme's StoreKit.storekit configuration.
+    /// The app is free: Settings must not offer tips or any purchase.
     @MainActor
-    func testTipJarShowsAllTipsWithRealText() {
+    func testSettingsHasNoPurchasesAndNoRawKeys() {
         app.buttons["settingsButton"].tap()
-        let tipRow = app.buttons["tipJarRow"]
-        XCTAssertTrue(tipRow.waitForExistence(timeout: 5))
-        tipRow.tap()
+        XCTAssertTrue(app.buttons["remindersImportRow"].waitForExistence(timeout: 5))
 
-        for id in ["tip_small", "tip_medium", "tip_large"] {
-            XCTAssertTrue(app.buttons["tip_\(id)"].waitForExistence(timeout: 15), "\(id) should be listed")
+        for word in ["Tip", "Support CheckoutHero", "Purchase", "Buy"] {
+            let matches = app.descendants(matching: .any).matching(NSPredicate(format: "label CONTAINS[c] %@", word))
+            XCTAssertEqual(matches.count, 0, "Unexpected '\(word)' in Settings: \(matches.allElementsBoundByIndex.map(\.label))")
         }
+        assertNoRawLocalizationKeys()
+    }
 
-        // No untranslated localization keys anywhere on the screen
-        let rawKeys = app.staticTexts.matching(NSPredicate(format: "label MATCHES %@", "^[a-z]+(_[a-z]+)+$"))
-        XCTAssertEqual(rawKeys.count, 0, "Raw keys on screen: \(rawKeys.allElementsBoundByIndex.map(\.label))")
+    /// Settings → Import from Reminders must ask for permission, not crash.
+    /// (iOS 17+ terminates the app if NSRemindersFullAccessUsageDescription is missing.)
+    @MainActor
+    func testRemindersImportAsksPermissionWithoutCrashing() {
+        // With no lists yet, the importer explains what to do instead of showing a blank screen.
+        app.buttons["settingsButton"].tap()
+        let row = app.buttons["remindersImportRow"]
+        XCTAssertTrue(row.waitForExistence(timeout: 5))
+        row.tap()
+        XCTAssertTrue(app.staticTexts["Create a List First"].waitForExistence(timeout: 5), "Empty state should explain next step")
+        assertNoRawLocalizationKeys()
+        app.buttons["Cancel"].firstMatch.tap()
+        app.buttons["Done"].firstMatch.tap()
 
-        app.buttons["tipJarDoneButton"].tap()
-        XCTAssertFalse(app.buttons["tip_tip_small"].waitForExistence(timeout: 2), "Done should close the Tip Jar")
+        // Create a list, then import into it: this triggers the Reminders permission request.
+        app.buttons["addListButton"].tap()
+        let nameField = app.textFields["listNameField"]
+        XCTAssertTrue(nameField.waitForExistence(timeout: 5))
+        nameField.tap()
+        nameField.typeText("Groceries")
+        app.buttons["saveListButton"].tap()
+        XCTAssertTrue(app.staticTexts["Groceries"].waitForExistence(timeout: 5))
+
+        app.buttons["settingsButton"].tap()
+        XCTAssertTrue(row.waitForExistence(timeout: 5))
+        row.tap()
+        // "Groceries" exists both in the picker sheet and in the list behind it; tap the visible one.
+        XCTAssertTrue(app.navigationBars["Import from Reminders"].waitForExistence(timeout: 5))
+        let candidates = app.buttons.containing(.staticText, identifier: "Groceries")
+        let deadline = Date().addingTimeInterval(5)
+        var listInPicker: XCUIElement?
+        while listInPicker == nil && Date() < deadline {
+            listInPicker = candidates.allElementsBoundByIndex.first { $0.isHittable }
+        }
+        guard let listInPicker else { return XCTFail("List not tappable in Reminders picker") }
+        listInPicker.tap()
+
+        // Permission prompt is shown by SpringBoard, not the app.
+        let springboard = XCUIApplication(bundleIdentifier: "com.apple.springboard")
+        let alert = springboard.alerts.firstMatch
+        XCTAssertTrue(alert.waitForExistence(timeout: 10), "Reminders permission prompt should appear")
+        let deny = alert.buttons.matching(NSPredicate(format: "label IN %@", ["Don’t Allow", "Don't Allow"])).firstMatch
+        (deny.exists ? deny : alert.buttons.element(boundBy: 0)).tap()
+
+        XCTAssertTrue(app.wait(for: .runningForeground, timeout: 5), "App must still be running after the Reminders request")
+        XCTAssertTrue(app.staticTexts["Reminders Access Denied"].waitForExistence(timeout: 5), "Denied state should be explained")
+        assertNoRawLocalizationKeys()
     }
 
     // MARK: - Helpers
+
+    /// Fails if any visible text looks like an untranslated key, e.g. "no_lists_title".
+    private func assertNoRawLocalizationKeys(file: StaticString = #filePath, line: UInt = #line) {
+        let rawKeys = app.staticTexts.matching(NSPredicate(format: "label MATCHES %@", "^[a-z]+(_[a-z]+)+$"))
+        XCTAssertEqual(rawKeys.count, 0, "Raw keys on screen: \(rawKeys.allElementsBoundByIndex.map(\.label))", file: file, line: line)
+    }
 
     private func replaceText(in field: XCUIElement, with text: String) {
         XCTAssertTrue(field.waitForExistence(timeout: 5))

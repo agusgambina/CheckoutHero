@@ -147,7 +147,7 @@ To add a new language:
 
 CheckoutHero is free and will always remain free.
 
-If it saves you time and money at the supermarket, consider leaving a tip inside the app (**Settings → Support CheckoutHero**) — or buying me a coffee:
+If it saves you time and money at the supermarket, consider buying me a coffee:
 
 [![Buy Me a Coffee](https://img.shields.io/badge/Buy%20Me%20a%20Coffee-support-%23FFDD00?style=flat-square&logo=buy-me-a-coffee&logoColor=black)](https://cafecito.app/agusgambina)
 

@@ -15,15 +15,27 @@ struct RemindersListPickerView: View {
 
     var body: some View {
         NavigationStack {
-            List {
-                ForEach(shoppingLists) { list in
-                    NavigationLink(destination: RemindersImportView(targetList: list)) {
-                        VStack(alignment: .leading) {
-                            Text(list.name)
-                                .font(.body)
-                            Text("\(list.items.count) items")
-                                .font(.caption)
-                                .foregroundStyle(.secondary)
+            Group {
+                if shoppingLists.isEmpty {
+                    // Reminders are imported into an existing list, so explain what to do first.
+                    ContentUnavailableView {
+                        Label(LocalizedStringKey("reminders_no_lists_title"), systemImage: "cart.badge.plus")
+                    } description: {
+                        Text(LocalizedStringKey("reminders_no_lists_description"))
+                    }
+                    .accessibilityIdentifier("remindersNoListsView")
+                } else {
+                    List {
+                        ForEach(shoppingLists) { list in
+                            NavigationLink(destination: RemindersImportView(targetList: list)) {
+                                VStack(alignment: .leading) {
+                                    Text(list.name)
+                                        .font(.body)
+                                    Text("\(list.items.count) items")
+                                        .font(.caption)
+                                        .foregroundStyle(.secondary)
+                                }
+                            }
                         }
                     }
                 }
