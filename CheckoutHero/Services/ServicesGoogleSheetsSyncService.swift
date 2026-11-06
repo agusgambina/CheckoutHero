@@ -14,6 +14,9 @@ struct GoogleSheetsSyncService {
     /// step-by-step deployment instructions.
     static let webAppURL: String = ""
 
+    /// Sync UI is hidden until a URL is set, so unconfigured builds stay fully on-device.
+    static var isConfigured: Bool { !webAppURL.isEmpty }
+
     enum SyncError: Error, LocalizedError {
         case notConfigured
         case invalidURL
@@ -46,7 +49,7 @@ struct GoogleSheetsSyncService {
     }
 
     static func send(payload: Payload) async throws {
-        guard !webAppURL.isEmpty else { throw SyncError.notConfigured }
+        guard isConfigured else { throw SyncError.notConfigured }
         guard let url = URL(string: webAppURL) else { throw SyncError.invalidURL }
 
         var request = URLRequest(url: url)

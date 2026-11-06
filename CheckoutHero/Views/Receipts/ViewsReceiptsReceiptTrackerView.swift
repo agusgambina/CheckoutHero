@@ -116,7 +116,9 @@ struct ReceiptTrackerView: View {
                 Text(receipt.date, style: .date)
                     .font(.subheadline)
                     .foregroundStyle(.secondary)
-                statusChip(for: receipt)
+                if GoogleSheetsSyncService.isConfigured {
+                    statusChip(for: receipt)
+                }
             }
 
             Spacer()
@@ -125,7 +127,9 @@ struct ReceiptTrackerView: View {
                 Text(receipt.formattedTotal())
                     .font(.title3.weight(.semibold))
 
-                syncButton(for: receipt)
+                if GoogleSheetsSyncService.isConfigured {
+                    syncButton(for: receipt)
+                }
             }
         }
         .padding(.vertical, 4)
