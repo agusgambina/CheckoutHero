@@ -13,21 +13,24 @@ struct ReviewReceiptView: View {
     @Environment(\.dismiss) private var dismiss
 
     let initial: ReceiptOCRService.ParsedReceipt
-    let onSave: (_ storeName: String, _ total: Decimal, _ date: Date, _ rawText: String) -> Void
+    let onSave: (_ storeName: String, _ total: Decimal, _ currencySymbol: String, _ date: Date, _ rawText: String) -> Void
 
     @State private var storeName: String
     @State private var totalString: String
+    @State private var currencySymbol: String
     @State private var date: Date
+    @State private var showingCurrencyPicker = false
     @FocusState private var focused: Field?
 
     enum Field { case store, total }
 
     init(initial: ReceiptOCRService.ParsedReceipt,
-         onSave: @escaping (_ storeName: String, _ total: Decimal, _ date: Date, _ rawText: String) -> Void) {
+         onSave: @escaping (_ storeName: String, _ total: Decimal, _ currencySymbol: String, _ date: Date, _ rawText: String) -> Void) {
         self.initial = initial
         self.onSave = onSave
         _storeName = State(initialValue: initial.storeName ?? "")
         _totalString = State(initialValue: initial.total.map { "\($0)" } ?? "")
+        _currencySymbol = State(initialValue: initial.currencySymbol ?? Locale.current.currencySymbol ?? "$")
         _date = State(initialValue: initial.date ?? Date())
     }
 
@@ -66,6 +69,29 @@ struct ReviewReceiptView: View {
                     Text("receipt_total_header")
                 }
 
+                Section {
+                    Button {
+                        showingCurrencyPicker = true
+                    } label: {
+                        HStack {
+                            Text("currency_symbol")
+                                .foregroundStyle(.primary)
+
+                            Spacer()
+
+                            Text(currencySymbol)
+                                .foregroundStyle(.secondary)
+                                .font(.title3)
+
+                            Image(systemName: "chevron.right")
+                                .font(.caption)
+                                .foregroundStyle(.tertiary)
+                        }
+                    }
+                } header: {
+                    Text("currency_header")
+                }
+
                 if !initial.rawText.isEmpty {
                     Section {
                         Text(initial.rawText)
@@ -87,6 +113,7 @@ struct ReviewReceiptView: View {
                         onSave(
                             storeName.trimmingCharacters(in: .whitespacesAndNewlines),
                             parsedTotal ?? 0,
+                            currencySymbol,
                             date,
                             initial.rawText
                         )
@@ -98,6 +125,9 @@ struct ReviewReceiptView: View {
                     Spacer()
                     Button("done") { focused = nil }
                 }
+            }
+            .sheet(isPresented: $showingCurrencyPicker) {
+                CurrencyPickerView(selectedCurrency: $currencySymbol)
             }
         }
     }

@@ -66,13 +66,21 @@ final class ScreenshotTests: XCTestCase {
         snap("03-add-item")
         app.buttons["confirmAddItemButton"].tap()
 
-        // 4. Settings
+        // 4. Receipts (scanning itself needs a camera, which the simulator does not have)
         app.navigationBars.buttons.element(boundBy: 0).tap() // back to lists
+        app.buttons[language == "es" ? "Recibos" : "Receipts"].firstMatch.tap()
+        let firstReceipt = language == "es" ? "Mercado La Cesta Verde" : "Green Basket Market"
+        XCTAssertTrue(app.staticTexts[firstReceipt].waitForExistence(timeout: 5))
+        settle()
+        snap("04-receipts")
+
+        // 5. Settings
+        app.buttons[language == "es" ? "Listas" : "Lists"].firstMatch.tap()
         XCTAssertTrue(app.buttons["settingsButton"].waitForExistence(timeout: 5))
         app.buttons["settingsButton"].tap()
         XCTAssertTrue(app.buttons["remindersImportRow"].waitForExistence(timeout: 5))
         settle()
-        snap("04-settings")
+        snap("05-settings")
     }
 
     // MARK: - Helpers

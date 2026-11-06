@@ -64,8 +64,8 @@ struct ReceiptTrackerView: View {
                 get: { pendingReview.map { IdentifiableReceipt(value: $0) } },
                 set: { pendingReview = $0?.value }
             )) { wrapper in
-                ReviewReceiptView(initial: wrapper.value) { store, total, date, raw in
-                    saveReceipt(store: store, total: total, date: date, raw: raw)
+                ReviewReceiptView(initial: wrapper.value) { store, total, currency, date, raw in
+                    saveReceipt(store: store, total: total, currency: currency, date: date, raw: raw)
                 }
             }
             .alert("error", isPresented: $showingError) {
@@ -186,12 +186,12 @@ struct ReceiptTrackerView: View {
         }
     }
 
-    private func saveReceipt(store: String, total: Decimal, date: Date, raw: String) {
+    private func saveReceipt(store: String, total: Decimal, currency: String, date: Date, raw: String) {
         let receipt = Receipt(
             date: date,
             storeName: store,
             total: total,
-            currencySymbol: "$",
+            currencySymbol: currency,
             rawText: raw,
             syncStatus: .pending
         )

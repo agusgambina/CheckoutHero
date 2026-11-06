@@ -15,6 +15,7 @@ struct ReceiptOCRService {
         var storeName: String?
         var total: Decimal?
         var date: Date?
+        var currencySymbol: String?
         var rawText: String
     }
 
@@ -33,11 +34,13 @@ struct ReceiptOCRService {
         let total = extractTotal(from: lines)
         let date = extractDate(from: lines)
         let storeName = extractStoreName(from: lines)
+        let currencySymbol = extractCurrencySymbol(from: lines)
 
         return ParsedReceipt(
             storeName: storeName,
             total: total,
             date: date,
+            currencySymbol: currencySymbol,
             rawText: joined
         )
     }
@@ -47,7 +50,8 @@ struct ReceiptOCRService {
     private static let totalKeywords = ["TOTAL", "NET", "BALANCE", "AMOUNT DUE", "AMOUNT", "GRAND TOTAL"]
 
     private static let amountRegex: NSRegularExpression = {
-        let pattern = #"(?<num>\d{1,5}(?:[.,]\d{2}))"#
+        // Grouped amounts come first, so "1,234.56" is not split into "1,23" and "4.56".
+        let pattern = #"(?<num>\d{1,3}(?:[.,]\d{3})+[.,]\d{2}|\d{1,5}[.,]\d{2})"#
         return try! NSRegularExpression(pattern: pattern, options: [])
     }()
 
@@ -75,10 +79,30 @@ struct ReceiptOCRService {
         let values: [Decimal] = matches.compactMap { match in
             let r = match.range(withName: "num")
             guard r.location != NSNotFound, let swiftRange = Range(r, in: line) else { return nil }
-            let numString = String(line[swiftRange]).replacingOccurrences(of: ",", with: ".")
-            return Decimal(string: numString)
+            // The last separator is always the decimal one; any others group thousands.
+            let digits = line[swiftRange].filter(\.isNumber)
+            return Decimal(string: "\(digits.dropLast(2)).\(digits.suffix(2))")
         }
         return values.max()
+    }
+
+    // MARK: - Currency extraction
+
+    /// "R$" comes before "$" so Brazilian receipts are not read as dollars.
+    private static let currencySymbols = ["R$", "€", "£", "¥", "₹", "₪", "₽", "$"]
+
+    /// Prefers the symbol on a total line, then any symbol printed on the receipt.
+    private static func extractCurrencySymbol(from lines: [String]) -> String? {
+        let totalLines = lines.filter { line in
+            let upper = line.uppercased()
+            return totalKeywords.contains(where: { upper.contains($0) })
+        }
+        for line in totalLines.reversed() + lines {
+            if let symbol = currencySymbols.first(where: { line.contains($0) }) {
+                return symbol
+            }
+        }
+        return nil
     }
 
     // MARK: - Date extraction
@@ -111,7 +135,9 @@ struct ReceiptOCRService {
                 guard let swiftRange = Range(match.range(at: 1), in: line) else { continue }
                 let candidate = String(line[swiftRange])
                 for formatter in dateFormatters {
-                    if let date = formatter.date(from: candidate) {
+                    // "yyyy" also accepts "26" as the year 26, so leave those to the "yy" formats.
+                    if let date = formatter.date(from: candidate),
+                       Calendar.current.component(.year, from: date) >= 2000 {
                         return date
                     }
                 }
