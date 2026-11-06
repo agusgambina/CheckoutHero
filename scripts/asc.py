@@ -94,7 +94,7 @@ def app_id(bundle_id):
     data = call("GET", "/v1/apps", params={"filter[bundleId]": bundle_id})["data"]
     if not data:
         die(f"no app with bundle id {bundle_id}")
-    return data[0]["id"]
+    print(data[0]["id"])
 
 
 def version(app, version_string):

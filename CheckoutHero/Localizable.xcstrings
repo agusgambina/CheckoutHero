@@ -462,6 +462,12 @@
             "state" : "new",
             "value" : "Align the price tag inside the frame"
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Alinea la etiqueta de precio dentro del marco"
+          }
         }
       }
     },
@@ -474,6 +480,12 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "Capture"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Capturar"
           }
         }
       }
