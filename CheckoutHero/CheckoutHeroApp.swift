@@ -20,7 +20,7 @@ struct CheckoutHeroApp: App {
     private let container: ModelContainer = {
         let config = ModelConfiguration(isStoredInMemoryOnly: CheckoutHeroApp.isUITesting)
         do {
-            let container = try ModelContainer(for: ShoppingList.self, ShoppingItem.self, configurations: config)
+            let container = try ModelContainer(for: ShoppingList.self, ShoppingItem.self, Receipt.self, configurations: config)
             // Screenshot runs use the in-memory store (with -UITesting) plus sample lists.
             if CheckoutHeroApp.isUITesting && ScreenshotSeed.isEnabled {
                 ScreenshotSeed.populate(container.mainContext)
