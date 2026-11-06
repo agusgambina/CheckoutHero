@@ -1,0 +1,9 @@
+{
+  "id" : "be4fe697-2a67-468f-b0fc-d30a057a85e1",
+  "targets" : [
+    {
+      "id" : "21A6AB31-2727-4199-B0AB-5D6CA43120A6",
+      "name" : "CheckoutHero"
+    }
+  ]
+}
