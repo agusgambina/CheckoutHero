@@ -401,7 +401,9 @@
 				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = 296P7R7T9M;
 				ENABLE_PREVIEWS = YES;
+				ENABLE_RESOURCE_ACCESS_CAMERA = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSCameraUsageDescription = "CheckoutHero uses the camera to scan price labels and receipts.";
 				INFOPLIST_KEY_NSRemindersFullAccessUsageDescription = "CheckoutHero uses Reminders to import your lists as shopping items.";
 				INFOPLIST_KEY_NSRemindersUsageDescription = "CheckoutHero uses Reminders to import your lists as shopping items.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -413,7 +415,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.4;
+				MARKETING_VERSION = 1.0.5;
 				PRODUCT_BUNDLE_IDENTIFIER = littlebit.CheckoutHero;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
@@ -436,7 +438,9 @@
 				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = 296P7R7T9M;
 				ENABLE_PREVIEWS = YES;
+				ENABLE_RESOURCE_ACCESS_CAMERA = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSCameraUsageDescription = "CheckoutHero uses the camera to scan price labels and receipts.";
 				INFOPLIST_KEY_NSRemindersFullAccessUsageDescription = "CheckoutHero uses Reminders to import your lists as shopping items.";
 				INFOPLIST_KEY_NSRemindersUsageDescription = "CheckoutHero uses Reminders to import your lists as shopping items.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -448,7 +452,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.4;
+				MARKETING_VERSION = 1.0.5;
 				PRODUCT_BUNDLE_IDENTIFIER = littlebit.CheckoutHero;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;

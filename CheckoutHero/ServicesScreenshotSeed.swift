@@ -50,8 +50,37 @@ enum ScreenshotSeed {
                 list.items.append(shoppingItem)
             }
         }
+        for seed in spanish ? spanishReceipts : englishReceipts {
+            context.insert(Receipt(
+                date: Date().addingTimeInterval(-seed.daysAgo * 86_400),
+                storeName: seed.store,
+                total: Decimal(string: seed.total) ?? 0,
+                currencySymbol: seed.currency
+            ))
+        }
         try? context.save()
     }
+
+    private struct SeedReceipt {
+        let store: String
+        let total: String
+        let currency: String
+        let daysAgo: Double
+    }
+
+    private static let englishReceipts: [SeedReceipt] = [
+        SeedReceipt(store: "Green Basket Market", total: "84.37", currency: "$", daysAgo: 1),
+        SeedReceipt(store: "Corner Bakery", total: "12.80", currency: "$", daysAgo: 3),
+        SeedReceipt(store: "Family Pharmacy", total: "27.45", currency: "$", daysAgo: 6),
+        SeedReceipt(store: "Fresh Fruit Stand", total: "18.20", currency: "$", daysAgo: 9),
+    ]
+
+    private static let spanishReceipts: [SeedReceipt] = [
+        SeedReceipt(store: "Mercado La Cesta Verde", total: "76.15", currency: "€", daysAgo: 1),
+        SeedReceipt(store: "Panadería de la Esquina", total: "9.60", currency: "€", daysAgo: 3),
+        SeedReceipt(store: "Farmacia Familiar", total: "23.40", currency: "€", daysAgo: 6),
+        SeedReceipt(store: "Frutería del Barrio", total: "15.85", currency: "€", daysAgo: 9),
+    ]
 
     // The first list is the most recent, so it appears at the top and is the one opened in screenshots.
     private static let englishLists: [SeedList] = [

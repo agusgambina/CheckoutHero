@@ -20,7 +20,11 @@ struct AddItemView: View {
     @State private var pricePerUnit: String = "0"
     @State private var showingError = false
     @State private var errorMessage = ""
-    
+
+    @State private var showingLabelCamera = false
+    @State private var reviewScan: LabelScannerService.ParsedLabel?
+    @State private var isProcessingScan = false
+
     @FocusState private var focusedField: Field?
     
     enum Field {
@@ -34,6 +38,29 @@ struct AddItemView: View {
     var body: some View {
         NavigationStack {
             Form {
+                Section {
+                    Button {
+                        showingLabelCamera = true
+                    } label: {
+                        HStack {
+                            Image(systemName: "camera.viewfinder")
+                            Text("scan_label_button")
+                                .fontWeight(.semibold)
+                            Spacer()
+                            if isProcessingScan {
+                                ProgressView()
+                            } else {
+                                Image(systemName: "chevron.right")
+                                    .foregroundStyle(.secondary)
+                            }
+                        }
+                    }
+                    .disabled(isProcessingScan)
+                    .tint(.teal)
+                } footer: {
+                    Text("scan_label_footer")
+                }
+
                 Section {
                     TextField("item_name_placeholder", text: $name)
                         .textInputAutocapitalization(.words)
@@ -126,9 +153,50 @@ struct AddItemView: View {
             } message: {
                 Text(errorMessage)
             }
+            .fullScreenCover(isPresented: $showingLabelCamera) {
+                LabelCameraView(
+                    onCapture: { image in
+                        showingLabelCamera = false
+                        handleScannedImage(image)
+                    },
+                    onCancel: {
+                        showingLabelCamera = false
+                    }
+                )
+                .ignoresSafeArea()
+            }
+            .sheet(item: Binding(
+                get: { reviewScan.map { IdentifiableLabel(value: $0) } },
+                set: { reviewScan = $0?.value }
+            )) { wrapper in
+                ReviewScanView(
+                    currencySymbol: shoppingList.currencySymbol,
+                    initial: wrapper.value
+                ) { scannedName, scannedPrice, scannedQuantity in
+                    name = scannedName
+                    pricePerUnit = "\(scannedPrice)"
+                    quantity = "\(Int(scannedQuantity))"
+                }
+            }
         }
         .onAppear {
             focusedField = .name
+        }
+    }
+
+    private struct IdentifiableLabel: Identifiable {
+        let id = UUID()
+        let value: LabelScannerService.ParsedLabel
+    }
+
+    private func handleScannedImage(_ image: UIImage) {
+        isProcessingScan = true
+        Task {
+            let parsed = await LabelScannerService.scan(image: image)
+            await MainActor.run {
+                isProcessingScan = false
+                reviewScan = parsed
+            }
         }
     }
     
