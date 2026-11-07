@@ -628,23 +628,6 @@
         }
       }
     },
-    "account" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Account"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Cuenta"
-          }
-        }
-      }
-    },
     "add" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -726,23 +709,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Ajusta el precio por unidad (total ÷ %@)"
-          }
-        }
-      }
-    },
-    "apple_user_id" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Apple User ID"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "ID de Usuario de Apple"
           }
         }
       }
@@ -1015,91 +981,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Eliminar"
-          }
-        }
-      }
-    },
-    "delete_account" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Delete Account"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Eliminar Cuenta"
-          }
-        }
-      }
-    },
-    "delete_account_confirm" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Delete Account"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Eliminar Cuenta"
-          }
-        }
-      }
-    },
-    "delete_account_confirmation_message" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Your account data will be permanently removed from this device."
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Los datos de tu cuenta se eliminarán permanentemente de este dispositivo."
-          }
-        }
-      }
-    },
-    "delete_account_confirmation_title" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Delete Account?"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "¿Eliminar Cuenta?"
-          }
-        }
-      }
-    },
-    "delete_account_footer" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Permanently removes your account data from this device."
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Elimina permanentemente los datos de tu cuenta de este dispositivo."
           }
         }
       }
@@ -1595,23 +1476,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Más Opciones"
-          }
-        }
-      }
-    },
-    "name" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Name"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Nombre"
           }
         }
       }
@@ -2140,74 +2004,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Listas de Compras"
-          }
-        }
-      }
-    },
-    "sign_in" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Sign In"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Iniciar Sesión"
-          }
-        }
-      }
-    },
-    "sign_in_apple" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Apple Account"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Cuenta Apple"
-          }
-        }
-      }
-    },
-    "sign_in_footer" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Sign in with Apple to personalize your experience."
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Inicia sesión con Apple para personalizar tu experiencia."
-          }
-        }
-      }
-    },
-    "sign_out" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Sign Out"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Cerrar Sesión"
           }
         }
       }

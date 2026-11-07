@@ -9,10 +9,8 @@ import SwiftUI
 
 struct SettingsView: View {
     @Environment(LanguageService.self) private var languageService
-    @Environment(AuthenticationService.self) private var authService
     @Environment(\.dismiss) private var dismiss
 
-    @State private var showingAuth = false
     @State private var showingReminders = false
 
     private let languageOptions: [(code: String, labelKey: String)] = [
@@ -25,26 +23,6 @@ struct SettingsView: View {
         @Bindable var bindableService = languageService
         NavigationStack {
             Form {
-                // Section 2: Account
-                Section {
-                    Button {
-                        showingAuth = true
-                    } label: {
-                        HStack {
-                            Label(LocalizedStringKey("sign_in_apple"), systemImage: "person.circle")
-                                .foregroundStyle(.primary)
-                            Spacer()
-                            authStateLabel
-                                .foregroundStyle(.secondary)
-                                .font(.subheadline)
-                        }
-                    }
-                } header: {
-                    Text(LocalizedStringKey("account"))
-                } footer: {
-                    Text(LocalizedStringKey("sign_in_footer"))
-                }
-
                 // Section 3: Import
                 Section {
                     Button {
@@ -91,26 +69,8 @@ struct SettingsView: View {
                 }
             }
         }
-        .sheet(isPresented: $showingAuth) {
-            AuthSignInView()
-                .environment(authService)
-        }
         .sheet(isPresented: $showingReminders) {
             RemindersListPickerView()
-        }
-    }
-
-    @ViewBuilder
-    private var authStateLabel: some View {
-        switch authService.authState {
-        case .guest:
-            Text(LocalizedStringKey("sign_in"))
-        case .signedIn(_, let displayName):
-            if let name = displayName {
-                Text(name)
-            } else {
-                Text(LocalizedStringKey("account"))
-            }
         }
     }
 
@@ -124,5 +84,4 @@ struct SettingsView: View {
 #Preview {
     SettingsView()
         .environment(LanguageService())
-        .environment(AuthenticationService())
 }

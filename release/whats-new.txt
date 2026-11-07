@@ -1,0 +1,13 @@
+[en-US]
+• Scan price labels with the camera to add items faster
+• New Receipts tab: scan your receipts and keep track of what you spend
+• Receipts support multiple currencies
+• Removed sign-in: CheckoutHero needs no account
+• Fixes and improvements
+
+[es-ES]
+• Escaneo de etiquetas de precio con la cámara para agregar productos más rápido
+• Nueva pestaña Recibos: escaneo de recibos y seguimiento de gastos
+• Los recibos admiten varias monedas
+• Sin inicio de sesión: CheckoutHero no necesita cuenta
+• Correcciones y mejoras

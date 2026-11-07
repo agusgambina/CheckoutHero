@@ -40,6 +40,13 @@ struct ShoppingItemTests {
         #expect(item(quantity: 2, unit: "kg").formattedQuantity == "2 kg")
     }
 
+    @Test func singleUnitIsNotPlural() {
+        #expect(item(quantity: 1, unit: "units").formattedQuantity == "1 unit")
+        #expect(item(quantity: 2, unit: "units").formattedQuantity == "2 units")
+        #expect(ShoppingItem.singular("units") == "unit")
+        #expect(ShoppingItem.singular("kg") == "kg")
+    }
+
     @Test func formattedTotalPriceUsesCurrencySymbol() {
         let result = item(quantity: 2, price: "1.50")
             .formattedTotalPrice(currencySymbol: "$", locale: Locale(identifier: "en_US"))

@@ -1,0 +1,16 @@
+CheckoutHero is a free shopping list app. It has no in-app purchases, no accounts and no sign-in. All data stays on the device (SwiftData); the app makes no network requests.
+
+The in-app purchases from earlier submissions (the Tip Jar) have been removed.
+
+HOW TO TEST
+1. Lists tab: tap + to create a list, open it and tap + to add items with a quantity and price. Tap an item to check it off; the total updates at the bottom.
+2. Price label scanning: in Add Item, tap "Scan Label" and point the camera at a shelf price label. Text is read on-device with Vision; you confirm the name and price before saving.
+3. Receipts tab: tap "Scan Receipt" to scan a paper receipt with the system document scanner. The store, date and total are detected on-device and can be edited before saving.
+4. Settings (gear icon) > Import from Reminders: imports reminders from a chosen Reminders list as shopping items.
+5. Settings > Language: switch between English and Spanish.
+
+PERMISSIONS
+- Camera: only when scanning a price label or receipt. Images are not stored.
+- Reminders: only when importing from Reminders.
+
+No demo account is needed.

@@ -84,7 +84,7 @@ struct EditItemView: View {
                 } header: {
                     Text("price_per_unit_header")
                 } footer: {
-                    Text("price_per_unit_footer \(unit)")
+                    Text("price_per_unit_footer \(ShoppingItem.singular(unit))")
                 }
                 
                 if let totalPreview = calculateTotalPreview() {

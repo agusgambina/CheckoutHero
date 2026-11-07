@@ -53,7 +53,7 @@ final class ShoppingItem {
         formatter.numberStyle = .decimal
         
         let quantityString = formatter.string(from: NSNumber(value: quantity)) ?? "\(quantity)"
-        return "\(quantityString) \(unit)"
+        return "\(quantityString) \(quantity == 1 ? Self.singular(unit) : unit)"
     }
     
     /// Formatted price per unit
@@ -93,6 +93,11 @@ extension ShoppingItem {
         "bottle",
         "can"
     ]
+
+    /// Singular form of a unit, for "1 unit" and "$4.50/unit".
+    static func singular(_ unit: String) -> String {
+        unit == "units" ? "unit" : unit
+    }
 }
 
 // MARK: - Validation
