@@ -2,7 +2,7 @@
 #
 # Generate App Store screenshots for CheckoutHero.
 #
-#   ./scripts/screenshots.sh            # iPhone 6.9" + iPad 13", English + Spanish
+#   ./scripts/screenshots.sh            # iPhone 6.9" + 6.3" + iPad 13", English + Spanish
 #   LANGS="en" ./scripts/screenshots.sh # English only
 #
 # Output: screenshots/<lang>/<device>/NN-name.jpg  (exact App Store sizes, no alpha)
@@ -17,6 +17,7 @@ LANGS="${LANGS:-en es}"
 # App Store Connect display sizes -> simulator model to use
 DEVICES=(
   "iPhone-6.9|iPhone 17 Pro Max"
+  "iPhone-6.3|iPhone 17 Pro"
   "iPad-13|iPad Pro 13-inch (M5)"
 )
 

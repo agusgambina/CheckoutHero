@@ -58,11 +58,11 @@ final class ScreenshotTests: XCTestCase {
         name.tap()
         name.typeText(language == "es" ? "Aguacates" : "Avocados")
         replaceText(in: app.textFields["itemQuantityField"], with: "3")
+        // On smaller iPhones the keyboard covers the price field.
+        dismissKeyboard()
         replaceText(in: app.textFields["itemPriceField"], with: language == "es" ? "1,25" : "1.25")
         // Dismiss the keyboard so the whole form is visible.
-        let done = app.toolbars.buttons.element(boundBy: app.toolbars.buttons.count > 0 ? app.toolbars.buttons.count - 1 : 0)
-        if done.exists { done.tap() }
-        settle()
+        dismissKeyboard()
         snap("03-add-item")
         app.buttons["confirmAddItemButton"].tap()
 
@@ -102,6 +102,12 @@ final class ScreenshotTests: XCTestCase {
         attachment.name = name
         attachment.lifetime = .keepAlways
         add(attachment)
+    }
+
+    private func dismissKeyboard() {
+        let done = app.toolbars.buttons.element(boundBy: app.toolbars.buttons.count > 0 ? app.toolbars.buttons.count - 1 : 0)
+        if done.exists { done.tap() }
+        settle()
     }
 
     private func replaceText(in field: XCUIElement, with text: String) {
