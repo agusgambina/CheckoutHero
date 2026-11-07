@@ -106,7 +106,13 @@ final class ScreenshotTests: XCTestCase {
 
     private func replaceText(in field: XCUIElement, with text: String) {
         XCTAssertTrue(field.waitForExistence(timeout: 5))
-        field.tap()
+        // On iPad the form can still be scrolling when the first tap lands, so retry
+        // until the field actually has keyboard focus.
+        for _ in 0..<3 {
+            field.tap()
+            if (field.value(forKey: "hasKeyboardFocus") as? Bool) == true { break }
+            settle()
+        }
         let current = field.value as? String ?? ""
         field.typeText(String(repeating: XCUIKeyboardKey.delete.rawValue, count: current.count))
         field.typeText(text)

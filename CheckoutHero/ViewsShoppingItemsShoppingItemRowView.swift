@@ -66,7 +66,7 @@ struct ShoppingItemRowView: View {
 
                     // Price-per-unit chip — tap to edit
                     Button { activeSheet = .price } label: {
-                        Text(item.formattedPricePerUnit(currencySymbol: currencySymbol) + (!item.unit.isEmpty ? "/\(item.unit)" : ""))
+                        Text(item.formattedPricePerUnit(currencySymbol: currencySymbol) + (!item.unit.isEmpty ? "/\(ShoppingItem.singular(item.unit))" : ""))
                             .font(.caption)
                             .foregroundStyle(.secondary)
                             .padding(.horizontal, 7)
@@ -207,7 +207,7 @@ private struct PriceEditSheet: View {
         if editTotal {
             return languageService.string(forKey: "total")
         } else {
-            let unitName = item.unit.isEmpty ? languageService.string(forKey: "unit") : item.unit
+            let unitName = item.unit.isEmpty ? languageService.string(forKey: "unit") : ShoppingItem.singular(item.unit)
             return String(format: languageService.string(forKey: "price_per_unit_footer"), unitName)
         }
     }
